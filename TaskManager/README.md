@@ -1,5 +1,4 @@
-</> Markdown
-
+﻿
 # Task Manager
 
 A simple console application for managing tasks, built with C# and .NET.
@@ -20,11 +19,11 @@ A simple console application for managing tasks, built with C# and .NET.
 ## Project Structure
 
 TaskManager  
-?  
-??? Program.cs  
-??? Models  
-?   ??? TaskItem.cs  
-??? tasks.json  
+│  
+├── Program.cs  
+├── Models  
+│   └── TaskItem.cs  
+└── tasks.json  
 
 ## How to Run
 

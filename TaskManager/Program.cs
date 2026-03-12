@@ -23,8 +23,15 @@ while (true)
 
     if (choice == "1")
     {
-        Console.Write("Task title: ");
-        string title = Console.ReadLine() ?? "";
+        string title;
+        do
+        {
+            Console.Write("Task title: ");
+            title = Console.ReadLine() ?? "";
+            if (string.IsNullOrWhiteSpace(title))
+                Console.WriteLine("Title cannot be empty. Please try again.");
+        } while (string.IsNullOrWhiteSpace(title));
+
         int id = tasks.Count > 0 ? tasks.Max(t => t.Id) + 1 : 1;
         tasks.Add(new TaskItem { Id = id, Title = title });
     }
