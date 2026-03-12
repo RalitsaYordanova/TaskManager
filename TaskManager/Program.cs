@@ -47,8 +47,14 @@ while (true)
     }
     else if (choice == "2")
     {
-        foreach (var task in tasks)
-            Console.WriteLine($"{task.Id}. [{(task.IsCompleted ? "X" : " ")}] {task.Title}");
+        Console.Clear();
+        Console.WriteLine("===== TASK MANAGER =====\n");
+        if (tasks.Count == 0)
+            Console.WriteLine("No tasks available.");
+        else
+            foreach (var task in tasks)
+                Console.WriteLine($"{task.Id}. [{(task.IsCompleted ? "X" : " ")}] {task.Title}");
+        Console.WriteLine("\n=======================\n");
         Console.WriteLine("Press any key...");
         Console.ReadKey();
     }
