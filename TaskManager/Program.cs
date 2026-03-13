@@ -22,7 +22,9 @@ while (true)
     Console.WriteLine("2. Show tasks");
     Console.WriteLine("3. Complete task");
     Console.WriteLine("4. Delete task");
-    Console.WriteLine("5. Exit");
+    Console.WriteLine("5. Show completed tasks");
+    Console.WriteLine("6. Show pending tasks");
+    Console.WriteLine("7. Exit");
     Console.WriteLine("────────────────────────────");
 
     Console.Write("Choice: ");
@@ -133,6 +135,26 @@ while (true)
     }
 
     else if (choice == "5")
+    {
+        var completed = tasks.Where(t => t.IsCompleted);
+
+        foreach (var task in completed)
+            Console.WriteLine($"{task.Id}. [✔] {task.Title}");
+
+        Console.WriteLine("Press any key...");
+        Console.ReadKey();
+    }
+    else if (choice == "6")
+    {
+        var pending = tasks.Where(t => !t.IsCompleted);
+
+        foreach (var task in pending)
+            Console.WriteLine($"{task.Id}. [ ] {task.Title}");
+
+        Console.WriteLine("Press any key...");
+        Console.ReadKey();
+    }
+    else if (choice == "7")
     {
         break;
     }
