@@ -121,8 +121,21 @@ while (true)
 
             if (task != null)
             {
-                tasks.Remove(task);
-                Console.WriteLine("Task deleted.");
+                Console.Write("Are you sure you want to delete this task? (y/n): ");
+                var confirm = Console.ReadLine();
+
+                if (confirm?.ToLower() == "y")
+                {
+                    tasks.Remove(task);
+                    Console.WriteLine("Task deleted.");
+                }
+                else
+                {
+                    Console.WriteLine("Delete cancelled.");
+                }
+
+                Console.WriteLine("Press any key...");
+                Console.ReadKey();
             }
             else
             {
