@@ -13,11 +13,7 @@ if (File.Exists(filePath))
 while (true)
 {
     Console.Clear();
-
-    Console.WriteLine("┌──────────────────────────┐");
-    Console.WriteLine("│        TASK MANAGER      │");
-    Console.WriteLine("└──────────────────────────┘");
-
+    Console.WriteLine("===== TASK MANAGER =====");
     Console.WriteLine("1. Add task");
     Console.WriteLine("2. Show tasks");
     Console.WriteLine("3. Complete task");
@@ -25,15 +21,15 @@ while (true)
     Console.WriteLine("5. Show completed tasks");
     Console.WriteLine("6. Show pending tasks");
     Console.WriteLine("7. Exit");
-    Console.WriteLine("────────────────────────────");
-
+    Console.WriteLine("------------------------");
     Console.Write("Choice: ");
+
     var choice = Console.ReadLine();
 
     if (string.IsNullOrWhiteSpace(choice))
     {
         Console.WriteLine("Please enter a valid option.");
-        Console.WriteLine("Press any key to continue...");
+        Console.WriteLine("Press any key...");
         Console.ReadKey();
         continue;
     }
@@ -48,9 +44,9 @@ while (true)
             title = Console.ReadLine() ?? "";
 
             if (string.IsNullOrWhiteSpace(title))
-                Console.WriteLine("Title cannot be empty. Please try again.");
-
-        } while (string.IsNullOrWhiteSpace(title));
+                Console.WriteLine("Title cannot be empty.");
+        }
+        while (string.IsNullOrWhiteSpace(title));
 
         int id = tasks.Count > 0 ? tasks.Max(t => t.Id) + 1 : 1;
 
@@ -59,33 +55,11 @@ while (true)
             Id = id,
             Title = title
         });
-
-        Console.WriteLine("Task added successfully.");
-        Console.WriteLine("Press any key...");
-        Console.ReadKey();
     }
 
     else if (choice == "2")
     {
-        Console.Clear();
-
-        Console.WriteLine("===== TASK LIST =====\n");
-
-        if (tasks.Count == 0)
-        {
-            Console.WriteLine("No tasks available.");
-        }
-        else
-        {
-            foreach (var task in tasks)
-            {
-                Console.WriteLine($"{task.Id}. [{(task.IsCompleted ? "✔" : " ")}] {task.Title}");
-            }
-        }
-
-        Console.WriteLine("\n─────────────────────");
-        Console.WriteLine("Press any key...");
-        Console.ReadKey();
+        ShowTasks(tasks);
     }
 
     else if (choice == "3")
@@ -97,17 +71,7 @@ while (true)
             var task = tasks.FirstOrDefault(t => t.Id == id);
 
             if (task != null)
-            {
                 task.IsCompleted = true;
-                Console.WriteLine("Task marked as completed.");
-            }
-            else
-            {
-                Console.WriteLine("Task not found.");
-            }
-
-            Console.WriteLine("Press any key...");
-            Console.ReadKey();
         }
     }
 
@@ -137,36 +101,21 @@ while (true)
                 Console.WriteLine("Press any key...");
                 Console.ReadKey();
             }
-            else
-            {
-                Console.WriteLine("Task not found.");
-            }
-
-            Console.WriteLine("Press any key...");
-            Console.ReadKey();
         }
     }
 
     else if (choice == "5")
     {
         var completed = tasks.Where(t => t.IsCompleted);
-
-        foreach (var task in completed)
-            Console.WriteLine($"{task.Id}. [✔] {task.Title}");
-
-        Console.WriteLine("Press any key...");
-        Console.ReadKey();
+        ShowTasks(completed);
     }
+
     else if (choice == "6")
     {
         var pending = tasks.Where(t => !t.IsCompleted);
-
-        foreach (var task in pending)
-            Console.WriteLine($"{task.Id}. [ ] {task.Title}");
-
-        Console.WriteLine("Press any key...");
-        Console.ReadKey();
+        ShowTasks(pending);
     }
+
     else if (choice == "7")
     {
         break;
@@ -180,4 +129,13 @@ while (true)
     }
 
     File.WriteAllText(filePath, JsonSerializer.Serialize(tasks));
+}
+
+static void ShowTasks(IEnumerable<TaskItem> tasks)
+{
+    foreach (var task in tasks)
+        Console.WriteLine($"{task.Id}. [{(task.IsCompleted ? "✔" : " ")}] {task.Title}");
+
+    Console.WriteLine("Press any key...");
+    Console.ReadKey();
 }
