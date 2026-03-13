@@ -20,7 +20,8 @@ while (true)
     Console.WriteLine("4. Delete task");
     Console.WriteLine("5. Show completed tasks");
     Console.WriteLine("6. Show pending tasks");
-    Console.WriteLine("7. Exit");
+    Console.WriteLine("7. Search tasks");
+    Console.WriteLine("8. Exit");
     Console.WriteLine("------------------------");
     Console.Write("Choice: ");
 
@@ -117,6 +118,16 @@ while (true)
     }
 
     else if (choice == "7")
+    {
+        Console.Write("Enter keyword: ");
+        var keyword = Console.ReadLine() ?? "";
+
+        var results = tasks
+            .Where(t => t.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase));
+
+        ShowTasks(results);
+    }
+    else if (choice == "8")
     {
         break;
     }
